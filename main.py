@@ -2,6 +2,7 @@ from handling.image_handling import ImageHandling
 from segmentation.segmentation_strategies.thresholding_strategies import *
 from segmentation.segmentation_strategies.region_based_strategy import *
 from feature_extraction.corner_detection import *
+from feature_extraction.feature_detection import *
 
 if __name__ == "__main__":
 
@@ -9,6 +10,7 @@ if __name__ == "__main__":
     handler.set_extract_strategy("urllist")
     images = handler.extract_image(
         [
+            "https://64.media.tumblr.com/tumblr_lt88wwEn1s1qildlio1_500.jpg",
             "https://64.media.tumblr.com/tumblr_lt88wwEn1s1qildlio1_500.jpg",
             "https://i.pinimg.com/736x/57/cf/98/57cf9899961fb683a2dbb0b37fa3cd42.jpg",
             "https://64.media.tumblr.com/147809bcd562f7f90b2dfc3b8d71b0f9/tumblr_inline_o5kahcXjgh1tvkjl5_500.png"
@@ -38,6 +40,10 @@ if __name__ == "__main__":
     harr = HarrisCornerDetector()
     
     imageSegmented.append(harr.detect_corners(images[0])[0])
+
+    feat = SIFTFeatureExtractor()
+
+    imageSegmented.append(feat.match_images(images[0],images[1]))
 
 
     handler.set_display_strategy("multiple",1,7)
