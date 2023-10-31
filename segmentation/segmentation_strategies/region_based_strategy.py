@@ -1,4 +1,4 @@
-from segmentation_method import RegionBased
+from .segmentation_method import RegionBased
 
 class RegionBasedStrategy(RegionBased):
     

@@ -11,39 +11,28 @@ class ImageSegmentation:
 
         self.segmentatiomethod = Thresholding()
 
-        self.thresholdingMethod = BinarizationTh()
-        self.regionBasedMethod = CountoursRb()
-        self.edgeBasedMethod = None
-        self.clusteringMethod = None
-        self.artificialMethod = None
+    def segment(self,image = None):
+        imagen = self.image
+        if image is not None:
+            imagen = image
+        self.segmentedImage = self.segmentatiomethod.segment(imagen)
+        return self.segmentedImage
     
     def set_image(self,image):
         self.image = image
 
-    def set_segmentation_method(self,strategy):
-        if strategy == "thresholding":
+    def get_method(self,method):
+        if method == "thresholding":
             self.segmentatiomethod = Thresholding()
-        elif strategy == "regionBased":
+        elif method == "regionBased":
             self.segmentatiomethod = RegionBased()
-        elif strategy == "EdgeBased":
+        elif method == "EdgeBased":
             self.segmentatiomethod = EdgeBased()
-        elif strategy == "clustering":
+        elif method == "clustering":
             self.segmentatiomethod = ClusteringBased()
-        elif strategy == "artificial":
+        elif method == "artificial":
             self.segmentatiomethod = ArtificialBased()
+        return self.segmentatiomethod
 
-    def set_thresholding_method(self,method):
-        if method == "binarization":
-            self.thresholdingMethod = BinarizationTh()
-        elif method == "adaptativeThresholding":
-            self.thresholdingMethod = AdaptativeTh()
-        elif method == "otsu":
-            self.thresholdingMethod = OtsuTh()
-        elif method == "splitMerge":
-            self.thresholdingMethod = SplitMergeTh()
-        elif method == "watershed":
-            self.thresholdingMethod = WatershedTh()
-        elif method == "regionGrowing":
-            self.thresholdingMethod = RegionGrowingTh()
 
             

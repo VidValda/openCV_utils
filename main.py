@@ -1,4 +1,5 @@
 from handling.image_handling import ImageHandling
+from segmentation.segmentation_strategies.thresholding_strategies import *
 
 if __name__ == "__main__":
 
@@ -13,4 +14,17 @@ if __name__ == "__main__":
     )
     handler.set_display_strategy("single")
     handler.display_image(images[0],figsize=(8,3),text="Imagen")
+
+   
+
+    imageSegmented = BinarizationTh().segment(images[0],125)
+    handler.display_image(imageSegmented,figsize=(8,8),text="Bin")
+
+    imageSegmented = AdaptativeTh().segment(images[0],255,9,10)
+    handler.display_image(imageSegmented,figsize=(8,8),text="adaptative")
+
+    imageSegmented = OtsuTh().segment(images[0])
+    handler.display_image(imageSegmented,figsize=(8,8),text="adaptative")
+
+
 
