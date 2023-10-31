@@ -8,13 +8,15 @@ class DisplayStrategy(ABC):
     """
 
     @abstractmethod
-    def display(self, images, texts):
+    def display(self, images, texts,figsize=None):
         """
         Display images with optional associated text.
 
         Parameters:
             images (list): A list of images to be displayed.
             texts (list): A list of text labels for the images.
+            figsize (tuple): A tuple specifying the figure size (width, height).
+
 
         This method should be implemented by subclasses to define how the images are displayed.
         """
@@ -25,17 +27,20 @@ class SingleDisplayStrategy(DisplayStrategy):
     A display strategy for showing a single image with an optional title.
     """
 
-    def display(self, images, texts):
+    def display(self, images, texts,figsize=None):
         """
         Display a single image with an optional title.
 
         Parameters:
             images (list): A list containing a single image.
             texts (str): A title or label for the image.
+            figsize (tuple): A tuple specifying the figure size (width, height).
 
         The image is displayed with the specified title.
         """
-        plt.figure(figsize=(20, 20))
+
+        if figsize is not None:
+            plt.figure(figsize=figsize)
         plt.title(texts)
         plt.imshow(images)
         plt.axis("off")
@@ -46,23 +51,27 @@ class MultipleDisplayStrategy(DisplayStrategy):
     A display strategy for showing multiple images in a grid layout.
     """
 
-    def display(self, images, texts):
+    def display(self, images, texts,figsize=None):
         """
         Display multiple images in a grid layout with optional titles.
 
         Parameters:
             images (list): A list of images to be displayed.
             texts (list): A list of text labels for the images.
+            figsize (tuple): A tuple specifying the figure size (width, height).
 
         The images are displayed in a grid with titles if provided.
         """
+
         num_images = len(images)
         # Calculate the number of rows and columns for the grid
         rows = int(math.ceil(num_images ** 0.5))
         cols = int(math.ceil(num_images / rows))
 
         # Create a new figure
-        plt.figure(figsize=(20, 20))
+        if figsize is not None:
+            plt.figure(figsize=figsize)
+
 
         for i in range(num_images):
             # Create a subplot for each image
@@ -88,13 +97,14 @@ class GridDisplayStrategy(DisplayStrategy):
         self.rows = rows
         self.cols = cols
 
-    def display(self, images, texts):
+    def display(self, images, texts,figsize=None):
         """
         Display images in a custom grid layout with optional titles.
 
         Parameters:
             images (list): A list of images to be displayed.
             texts (list): A list of text labels for the images.
+            figsize (tuple): A tuple specifying the figure size (width, height).
 
         The images are displayed in a custom grid layout with titles if provided.
         """
@@ -102,8 +112,8 @@ class GridDisplayStrategy(DisplayStrategy):
         if num_images != self.rows * self.cols:
             raise ValueError("Number of images should match the grid size (rows x cols).")
 
-        # Create a new figure
-        plt.figure(figsize=(20, 20))
+        if figsize is not None:
+            plt.figure(figsize=figsize)
 
         for i in range(num_images):
             # Create a subplot for each image

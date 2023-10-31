@@ -25,20 +25,25 @@ class ImageHandling:
         return self.image
         
 
-    def display_image(self,text=None):
+    def display_image(self,image = None, text=None, figsize=None):
         """
         Display an image using the current display strategy.
 
         Args:
             text (str, optional): Text to display alongside the image. Defaults to None.
         """
-        if text:
+        imagen = self.image
+        if text is not None:
             self.text = text
-        if isinstance(self.image,list):
+        if image is not None:
+            imagen = image
+
+
+        if isinstance(imagen,list):
             numbers = [(i) for i in range(len(self.image))]
-            self.displayStrategy.display(self.image, numbers)
+            self.displayStrategy.display(imagen, numbers, figsize)
         else:
-            self.displayStrategy.display(self.image, self.text)
+            self.displayStrategy.display(imagen, self.text, figsize)
 
     def set_display_strategy(self, strategy, rows=None, cols=None):
         """
