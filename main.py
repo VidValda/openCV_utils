@@ -3,6 +3,7 @@ from segmentation.segmentation_strategies.thresholding_strategies import *
 from segmentation.segmentation_strategies.region_based_strategy import *
 from feature_extraction.corner_detection import *
 from feature_extraction.feature_detection import *
+from compression.image_compression import JPEGCompression
 
 if __name__ == "__main__":
 
@@ -45,9 +46,15 @@ if __name__ == "__main__":
 
     imageSegmented.append(feat.match_images(images[0],images[1]))
 
+    comp = JPEGCompression()
+    data_compressed = comp.compress(images[0])
+    print(data_compressed)
+    data_decompressed = comp.decompress(data_compressed)
+
+    imageSegmented.append(data_decompressed)
 
     handler.set_display_strategy("multiple",1,7)
-    handler.display_image(imageSegmented,figsize=(9,9))
+    handler.display_image(imageSegmented,figsize=(15,15))
 
 
 
