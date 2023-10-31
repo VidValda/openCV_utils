@@ -21,10 +21,10 @@ if __name__ == "__main__":
     handler.display_image(imageSegmented,figsize=(8,8),text="Bin")
 
     imageSegmented = AdaptativeTh().segment(images[0],255,9,10)
-    handler.display_image(imageSegmented,figsize=(8,8),text="adaptative")
+    handler.display_image(imageSegmented,figsize=(8,8),text="Adaptative")
 
     imageSegmented = OtsuTh().segment(images[0])
-    handler.display_image(imageSegmented,figsize=(8,8),text="adaptative")
+    handler.display_image(imageSegmented,figsize=(8,8),text="Otsu")
 
 
 
