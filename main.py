@@ -1,5 +1,6 @@
 from handling.image_handling import ImageHandling
 from segmentation.segmentation_strategies.thresholding_strategies import *
+from segmentation.segmentation_strategies.region_based_strategy import *
 
 if __name__ == "__main__":
 
@@ -29,7 +30,11 @@ if __name__ == "__main__":
 
     imageSegmented.append(watershed.add_centroids())
 
-    handler.set_display_strategy("grid",1,5)
+    cont = CountoursRb()
+
+    imageSegmented.append(cont.segment(images[0])[1])
+
+    handler.set_display_strategy("grid",1,6)
     handler.display_image(imageSegmented,figsize=(8,8))
 
 
