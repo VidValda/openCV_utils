@@ -13,3 +13,4 @@ if __name__ == "__main__":
     )
     handler.set_display_strategy("single")
     handler.display_image(images[0],figsize=(8,3),text="Imagen")
+
