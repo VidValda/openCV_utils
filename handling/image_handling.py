@@ -30,12 +30,15 @@ class ImageHandling:
         Display an image using the current display strategy.
 
         Args:
-            image: The image to display.
             text (str, optional): Text to display alongside the image. Defaults to None.
         """
         if text:
             self.text = text
-        self.displayStrategy.display(self.image, self.text)
+        if isinstance(self.image,list):
+            numbers = [(i) for i in range(len(self.image))]
+            self.displayStrategy.display(self.image, numbers)
+        else:
+            self.displayStrategy.display(self.image, self.text)
 
     def set_display_strategy(self, strategy, rows=None, cols=None):
         """
@@ -63,7 +66,7 @@ class ImageHandling:
         Set the image extraction strategy.
 
         Args:
-            strategy (str): The extraction strategy to set ("path", "url", "numpy", or "random").
+            strategy (str): The extraction strategy to set ("path", "url", "numpy", "random", "pathlist", or "urllist").
             width (int, optional): Width parameter for the extraction strategy. Defaults to None.
             height (int, optional): Height parameter for the extraction strategy. Defaults to None.
 
@@ -78,5 +81,9 @@ class ImageHandling:
             self.extractStrategy = NumpyImportStrategy()
         elif strategy == "random":
             self.extractStrategy = RandomImportStrategy()
+        elif strategy == "pathlist":
+            self.extractStrategy = PathListStrategy()
+        elif strategy == "urllist":
+            self.extractStrategy = URLListStrategy()
         else:
             raise ValueError("Invalid extract strategy")

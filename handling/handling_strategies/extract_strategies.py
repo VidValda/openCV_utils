@@ -118,7 +118,60 @@ class RandomImportStrategy(ImportStrategy):
             source: This parameter is not used in this strategy.
 
         Returns:
-            A randomly generated image as a NumPy array.
+            A randomly generated image as a NumPy array (grayscale).
         """
         image = np.random.randint(0, 256, (self.height, self.width), dtype=np.uint8)
         return image
+
+
+class URLListStrategy(ImportStrategy):
+    """
+    Image import strategy for importing images from a list of URLs.
+
+    Attributes:
+        None
+    """
+
+    def import_image(self, source):
+        """
+        Import an image from a list of URLs.
+
+        Args:
+            source: A list of URLs of the images.
+
+        Returns:
+            A list of images in RGB format.
+        """
+        images = []
+        for url in source:
+            response = urllib.request.urlopen(url)
+            image_array = np.asarray(bytearray(response.read()), dtype=np.uint8)
+            image = cv2.imdecode(image_array, -1)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            images.append(image)
+        return images
+
+class PathListStrategy(ImportStrategy):
+    """
+    Image import strategy for importing images from a list of local file paths.
+
+    Attributes:
+        None
+    """
+
+    def import_image(self, source):
+        """
+        Import images from a list of local file paths.
+
+        Args:
+            source: A list of file paths to the images.
+
+        Returns:
+            A list of images in RGB format.
+        """
+        images = []
+        for path in source:
+            image = cv2.imread(path)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            images.append(image)
+        return images
