@@ -15,19 +15,18 @@ if __name__ == "__main__":
     handler.set_display_strategy("single")
     handler.display_image(images[0],figsize=(8,3),text="Imagen")
 
-   
+    imageSegmented = []
 
-    imageSegmented = BinarizationTh().segment(images[0],125)
-    handler.display_image(imageSegmented,figsize=(8,8),text="Bin")
+    imageSegmented.append( BinarizationTh().segment(images[0],125))
 
-    imageSegmented = AdaptativeTh().segment(images[0],255,9,10)
-    handler.display_image(imageSegmented,figsize=(8,8),text="Adaptative")
+    imageSegmented.append( AdaptativeTh().segment(images[0],255,9,10))
 
-    imageSegmented = OtsuTh().segment(images[0])
-    handler.display_image(imageSegmented,figsize=(8,8),text="Otsu")
+    imageSegmented.append( OtsuTh().segment(images[0]))
 
-    imageSegmented = WatershedTh().segment(images[0])
-    handler.display_image(imageSegmented,figsize=(8,8),text="watershed")
+    imageSegmented.append( WatershedTh().segment(images[0]))
+
+    handler.set_display_strategy("grid",1,4)
+    handler.display_image(imageSegmented,figsize=(8,8))
 
 
 

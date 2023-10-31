@@ -40,7 +40,7 @@ class ImageHandling:
 
 
         if isinstance(imagen,list):
-            numbers = [(i) for i in range(len(self.image))]
+            numbers = [(i) for i in range(len(imagen))]
             self.displayStrategy.display(imagen, numbers, figsize)
         else:
             self.displayStrategy.display(imagen, self.text, figsize)
