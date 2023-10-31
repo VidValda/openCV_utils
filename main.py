@@ -23,9 +23,13 @@ if __name__ == "__main__":
 
     imageSegmented.append( OtsuTh().segment(images[0]))
 
-    imageSegmented.append( WatershedTh().segment(images[0]))
+    watershed = WatershedTh()
 
-    handler.set_display_strategy("grid",1,4)
+    imageSegmented.append( watershed.segment(images[0]))
+
+    imageSegmented.append(watershed.add_centroids())
+
+    handler.set_display_strategy("grid",1,5)
     handler.display_image(imageSegmented,figsize=(8,8))
 
 

@@ -88,6 +88,7 @@ class WatershedTh:
             numpy.ndarray: The segmented image with marked boundaries in blue.
         """
         image_copy = np.copy(image)
+        self.image_copy = image_copy
 
         gray_image = cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
 
@@ -114,9 +115,26 @@ class WatershedTh:
 
         markersW = cv2.watershed(image_copy,markers)
         image_copy[markersW == -1] = [255,0,0]
-        ret, markers = cv2.connectedComponents(gray_image)
         self.num_objects = len(markersW)
         self.image_watershed = image_copy
+        self.markersW = markersW
+        
+        return image_copy
+
+    def add_centroids(self):
+        centroids = []
+        image_copy = np.copy(self.image_copy)
+        for label in range(1, self.markersW.max() + 1):
+            mask = (self.markersW == label).astype(np.uint8)
+            moments = cv2.moments(mask)
+            centroid_x = int(moments["m10"] / moments["m00"])
+            centroid_y = int(moments["m01"] / moments["m00"])
+            if label != 1:
+                centroids.append((centroid_x, centroid_y))
+        
+        for centroid in centroids:
+            cv2.circle(image_copy, centroid, 5, (0, 255, 0), -1)
+
         return image_copy
 
 class RegionGrowingTh:
