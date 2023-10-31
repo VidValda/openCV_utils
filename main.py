@@ -26,5 +26,8 @@ if __name__ == "__main__":
     imageSegmented = OtsuTh().segment(images[0])
     handler.display_image(imageSegmented,figsize=(8,8),text="Otsu")
 
+    imageSegmented = WatershedTh().segment(images[0])
+    handler.display_image(imageSegmented,figsize=(8,8),text="watershed")
+
 
 
