@@ -1,6 +1,7 @@
 from handling.image_handling import ImageHandling
 from segmentation.segmentation_strategies.thresholding_strategies import *
 from segmentation.segmentation_strategies.region_based_strategy import *
+from feature_extraction.corner_detection import *
 
 if __name__ == "__main__":
 
@@ -34,8 +35,13 @@ if __name__ == "__main__":
 
     imageSegmented.append(cont.segment(images[0])[1])
 
-    handler.set_display_strategy("grid",1,6)
-    handler.display_image(imageSegmented,figsize=(8,8))
+    harr = HarrisCornerDetector()
+    
+    imageSegmented.append(harr.detect_corners(images[0])[0])
+
+
+    handler.set_display_strategy("multiple",1,7)
+    handler.display_image(imageSegmented,figsize=(9,9))
 
 
 
